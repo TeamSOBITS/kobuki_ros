@@ -44,7 +44,7 @@ namespace kobuki_node
  **/
 class Odometry final {
 public:
-  explicit Odometry(double cmd_vel_timeout_sec, const std::string & odom_frame, const std::string & base_frame, bool publish_tf, bool use_imu_heading, const rclcpp::Time & now);
+  explicit Odometry(double cmd_vel_timeout_sec, const std::string & odom_frame, const std::string & base_frame, const std::string & ros_namespace, bool publish_tf, bool use_imu_heading, const rclcpp::Time & now);
   Odometry(Odometry && c) = delete;
   Odometry & operator=(Odometry && c) = delete;
   Odometry(const Odometry & c) = delete;
@@ -72,6 +72,7 @@ private:
   rclcpp::Duration cmd_vel_timeout_;
   std::string odom_frame_;
   std::string base_frame_;
+  std::string ros_namespace_;
   bool publish_tf_;
   bool use_imu_heading_;
   rclcpp::Time last_cmd_time_;

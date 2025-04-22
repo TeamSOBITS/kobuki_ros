@@ -270,7 +270,7 @@ KobukiRos::KobukiRos(const rclcpp::NodeOptions & options) : rclcpp::Node("kobuki
     }
   }
 
-  odometry_ = std::make_unique<Odometry>(cmd_vel_timeout_sec, odom_frame, base_frame, publish_tf, use_imu_heading, this->get_clock()->now());
+  odometry_ = std::make_unique<Odometry>(cmd_vel_timeout_sec, odom_frame, base_frame, std::string(this->get_namespace()).substr(1), publish_tf, use_imu_heading, this->get_clock()->now());
 
   /*********************
    ** Driver Init

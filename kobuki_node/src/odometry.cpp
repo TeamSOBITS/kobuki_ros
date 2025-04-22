@@ -39,6 +39,7 @@ Odometry::Odometry(
   double cmd_vel_timeout_sec,
   const std::string & odom_frame,
   const std::string & base_frame,
+  const std::string & ros_namespace,
   bool publish_tf,
   bool use_imu_heading,
   const rclcpp::Time & now
@@ -48,6 +49,7 @@ Odometry::Odometry(
   cmd_vel_timeout_(rclcpp::Duration::from_seconds(cmd_vel_timeout_sec)),
   odom_frame_(odom_frame),
   base_frame_(base_frame),
+  ros_namespace_(ros_namespace),
   publish_tf_(publish_tf),
   use_imu_heading_(use_imu_heading),
   last_cmd_time_(now)
@@ -118,8 +120,8 @@ std::unique_ptr<geometry_msgs::msg::TransformStamped> Odometry::getTransform()
 
   auto odom_trans = std::make_unique<geometry_msgs::msg::TransformStamped>();
 
-  odom_trans->header.frame_id = odom_frame_;
-  odom_trans->child_frame_id = base_frame_;
+  odom_trans->header.frame_id = (ros_namespace_=="") ? odom_frame_ : ros_namespace_ + "/" + odom_frame_;
+  odom_trans->child_frame_id = (ros_namespace_=="") ? base_frame_ : ros_namespace_ + "/" + base_frame_;
   odom_trans->header.stamp = odom_quat_time_;
   odom_trans->transform.translation.x = pose_[0];
   odom_trans->transform.translation.y = pose_[1];
@@ -136,8 +138,8 @@ std::unique_ptr<nav_msgs::msg::Odometry> Odometry::getOdometry()
 
   // Header
   odom->header.stamp = odom_quat_time_;
-  odom->header.frame_id = odom_frame_;
-  odom->child_frame_id = base_frame_;
+  odom->header.frame_id = (ros_namespace_=="") ? odom_frame_ : ros_namespace_ + "/" + odom_frame_;
+  odom->child_frame_id = (ros_namespace_=="") ? base_frame_ : ros_namespace_ + "/" + base_frame_;
 
   // Position
   odom->pose.pose.position.x = pose_[0];
