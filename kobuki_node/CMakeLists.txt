@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(kobuki_node)
+set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1 CACHE INTERNAL "No dev warnings")
 
 find_package(ament_cmake_ros REQUIRED)
 find_package(angles REQUIRED)
