@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(kobuki_auto_docking)
+set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1 CACHE INTERNAL "No dev warnings")
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
